@@ -11,19 +11,14 @@
 </head>
 <body>
 
-<header class="hero">
+<!-- HERO -->
+<header class="hero" id="hero">
   <div class="hero-bg"></div>
-  <div class="hero-corner tl"></div>
-  <div class="hero-corner tr"></div>
-  <div class="hero-corner bl"></div>
-  <div class="hero-corner br"></div>
-
   <div class="hero-content">
     <div class="oscars-logo">
       <img class="logo-img" src="oscars-logo.png" alt="The Oscars" />
       <div class="logo-year">2026</div>
     </div>
-
     <div class="hero-rule">
       <span class="rule-line"></span>
       <span class="rule-sq">□</span>
@@ -31,9 +26,7 @@
       <span class="rule-sq">□</span>
       <span class="rule-line"></span>
     </div>
-
     <h1 class="hero-porra-title">PORRA POLICARPIER</h1>
-
     <div class="hero-rule">
       <span class="rule-line"></span>
       <span class="rule-sq">□</span>
@@ -41,16 +34,16 @@
       <span class="rule-sq">□</span>
       <span class="rule-line"></span>
     </div>
-
     <p class="hero-sub">Elegí tus ganadores · Una sola oportunidad</p>
-
-    <a class="btn-hero" href="#quiz-section">
-      <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M8 5v14l11-7z"/></svg>
-      Comenzar la Porra
-    </a>
+    <button class="btn-scroll" id="btn-scroll-down" aria-label="Ir al quiz">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
   </div>
 </header>
 
+<!-- QUIZ -->
 <section id="quiz-section" class="quiz-section">
 
   <div id="step-user" class="step active">
@@ -127,30 +120,30 @@
 
 </section>
 
-<div id="confirm-modal" class="modal hidden">
-  <div class="modal-backdrop"></div>
-  <div class="modal-box">
-    <div class="modal-top-ornament"></div>
-    <div class="modal-trophy">🏆</div>
-    <div class="modal-stars">✦ ✦ ✦</div>
-    <h2 class="modal-title">¡Porra Enviada!</h2>
-    <p class="modal-sub">Tus predicciones quedaron registradas</p>
-    <div class="modal-user-info">
-      <span id="modal-twitch-display"></span>
-      <span id="modal-discord-display"></span>
+<!-- PANTALLA DE CONFIRMACIÓN (reemplaza todo) -->
+<div id="confirm-screen" class="confirm-screen hidden">
+  <div class="confirm-bg"></div>
+  <div class="confirm-content">
+    <div class="confirm-logo">
+      <img class="logo-img" src="oscars-logo.png" alt="The Oscars" />
+      <div class="logo-year">2026</div>
     </div>
-    <p class="modal-summary-label">Tus picks principales</p>
-    <div class="modal-summary" id="modal-summary"></div>
-    <button class="btn-outline" id="modal-close-btn">Cerrar</button>
-    <div class="modal-bottom-ornament"></div>
+    <div class="confirm-trophy">🏆</div>
+    <div class="confirm-stars">✦ ✦ ✦</div>
+    <h2 class="confirm-title">¡Porra Enviada!</h2>
+    <p class="confirm-sub">Tus predicciones quedaron registradas.<br>¡Buena suerte!</p>
+    <div class="confirm-user-info">
+      <span id="confirm-twitch-display"></span>
+      <span id="confirm-discord-display"></span>
+    </div>
+    <div class="confirm-rule">
+      <span class="rule-line"></span>
+      <span class="rule-sq">□</span>
+      <span class="rule-line"></span>
+    </div>
+    <p class="confirm-footer-text">www.twitch.tv/polispol1</p>
   </div>
 </div>
-
-<footer class="site-footer">
-  <a href="https://www.twitch.tv/polispol1" target="_blank" rel="noopener">www.twitch.tv/polispol1</a>
-  <span class="footer-dot">✦</span>
-  <span>Oscars 2026</span>
-</footer>
 
 <script src="data.js"></script>
 <script src="app.js"></script>
