@@ -1,7 +1,3 @@
-/* ═══════════════════════════════════════════════
-   PORRA POLICARPIER · OSCARS 2026
-═══════════════════════════════════════════════ */
-
 :root {
   --g1: #E8D08A;
   --g2: #C9A84C;
@@ -23,9 +19,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
 ::-webkit-scrollbar-track { background: var(--n1); }
 ::-webkit-scrollbar-thumb { background: var(--g3); border-radius: 3px; }
 
-/* ══════════════════════════════════════
-   HERO
-══════════════════════════════════════ */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -40,7 +33,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
   transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
-/* Hero oculto cuando el quiz está activo */
 .hero.hero-hidden {
   opacity: 0;
   visibility: hidden;
@@ -50,7 +42,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
   z-index: -1;
 }
 
-/* Stars de fondo */
 .hero-bg {
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background-image:
@@ -73,7 +64,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
   animation: fadeUp 0.9s ease both;
 }
 
-/* ── OSCARS LOGO ── */
 .oscars-logo {
   display: flex; flex-direction: column;
   align-items: center; gap: 0.5rem;
@@ -91,7 +81,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
   margin-right: -0.55em;
 }
 
-/* ── ORNAMENTAL RULES ── */
 .hero-rule {
   display: flex; align-items: center; gap: 0.6rem;
   width: 100%; max-width: 380px; margin: 1.1rem auto;
@@ -99,7 +88,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
 .rule-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent); }
 .rule-sq { color: var(--g3); font-size: 0.5rem; line-height: 1; }
 
-/* ── PORRA TITLE ── */
 .hero-porra-title {
   font-family: 'Cinzel', serif; font-weight: 400;
   font-size: clamp(1rem, 3.8vw, 1.75rem);
@@ -113,7 +101,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
   animation: fadeUp 0.9s ease both 0.25s;
 }
 
-/* ── SCROLL BUTTON (flecha rebotante) ── */
 .btn-scroll {
   background: transparent; border: 1px solid rgba(201,168,76,0.35);
   color: var(--g2); border-radius: 50%;
@@ -133,9 +120,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ══════════════════════════════════════
-   QUIZ SECTION
-══════════════════════════════════════ */
 .quiz-section {
   background: linear-gradient(180deg, var(--n1) 0%, var(--n2) 100%);
   padding: 3.5rem 1.25rem 6rem;
@@ -145,9 +129,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
 .step.hidden { display: none; }
 .step.active { display: block; }
 
-/* ══════════════════════════════════════
-   CARD
-══════════════════════════════════════ */
 .card {
   background: var(--glass); border: 1px solid var(--border);
   border-radius: 20px; padding: 2.75rem 2.25rem;
@@ -175,9 +156,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
 }
 .card-desc { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: rgba(232,208,138,0.55); }
 
-/* ══════════════════════════════════════
-   INPUTS
-══════════════════════════════════════ */
 .user-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 2.25rem; }
 @media (max-width: 500px) { .user-fields { grid-template-columns: 1fr; } }
 .input-group { display: flex; flex-direction: column; gap: 0.45rem; }
@@ -192,9 +170,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
 .input-group input::placeholder { color: rgba(201,168,76,0.22); }
 .input-group input:focus { border-color: var(--g2); box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
 
-/* ══════════════════════════════════════
-   BUTTONS
-══════════════════════════════════════ */
 .btn-gold {
   display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%;
   background: var(--gold-grad); color: var(--n1); border: none; border-radius: 50px;
@@ -212,9 +187,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
 }
 .btn-outline:hover { border-color: var(--g1); color: var(--g1); }
 
-/* ══════════════════════════════════════
-   PROGRESS
-══════════════════════════════════════ */
 .progress-wrap { margin-bottom: 1.75rem; }
 .progress-info { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.4rem; }
 .progress-cat-label { display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--g2); }
@@ -232,9 +204,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
   box-shadow: 0 0 8px var(--g2), 0 0 16px rgba(201,168,76,0.4);
 }
 
-/* ══════════════════════════════════════
-   SLIDER
-══════════════════════════════════════ */
 .slider-viewport { overflow: hidden; border-radius: 18px; margin-bottom: 1.25rem; box-shadow: var(--shadow); }
 .slider-track { display: flex; transition: transform 0.42s cubic-bezier(0.4,0,0.2,1); }
 
@@ -251,9 +220,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
 .slide-badge { flex-shrink: 0; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.65rem; border-radius: 20px; border: 1px solid rgba(201,168,76,0.18); color: rgba(201,168,76,0.35); transition: all 0.3s; white-space: nowrap; }
 .slide-badge.ok { color: var(--g2); border-color: rgba(201,168,76,0.45); background: rgba(201,168,76,0.08); }
 
-/* ══════════════════════════════════════
-   NOMINEES
-══════════════════════════════════════ */
 .nominees-list { display: flex; flex-direction: column; gap: 0.5rem; }
 .nominee-label { cursor: pointer; display: block; }
 .nominee-label input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
@@ -267,9 +233,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
 .nominee-text { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; color: rgba(232,208,138,0.65); line-height: 1.3; transition: color .2s; }
 .nominee-label input:checked ~ .nominee-box .nominee-text { color: var(--g1); }
 
-/* ══════════════════════════════════════
-   SLIDER NAV
-══════════════════════════════════════ */
 .slider-nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
 .btn-nav { display: flex; align-items: center; gap: 0.35rem; background: var(--n3); border: 1px solid var(--border); color: var(--g2); border-radius: 30px; font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.6rem 1.15rem; cursor: pointer; transition: all .25s; white-space: nowrap; }
 .btn-nav:hover:not(:disabled) { background: rgba(201,168,76,0.1); border-color: var(--g2); color: var(--g1); }
@@ -279,18 +242,12 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
 .dot.active { background: var(--g2); border-color: var(--g2); transform: scale(1.3); box-shadow: 0 0 6px rgba(201,168,76,0.5); }
 .dot.done   { background: rgba(201,168,76,0.38); border-color: rgba(201,168,76,0.3); }
 
-/* ══════════════════════════════════════
-   SUBMIT ZONE
-══════════════════════════════════════ */
 .submit-zone { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 2rem 1.5rem; border: 1px solid var(--border-dim); border-radius: 16px; background: rgba(201,168,76,0.03); }
 .submit-divider { color: var(--g3); letter-spacing: 0.5em; font-size: 0.8rem; opacity: 0.7; }
 .submit-note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.98rem; color: rgba(201,168,76,0.5); text-align: center; line-height: 1.5; }
 .submit-note strong { color: var(--g2); font-style: normal; }
 .btn-submit { max-width: 320px; }
 
-/* ══════════════════════════════════════
-   PANTALLA DE CONFIRMACIÓN (full screen)
-══════════════════════════════════════ */
 .confirm-screen {
   position: fixed; inset: 0; z-index: 9999;
   background: radial-gradient(ellipse 90% 70% at 50% 25%, #1C1608 0%, #0D0A04 50%, #060400 100%);
@@ -301,7 +258,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
 .confirm-screen.hidden   { display: none; }
 .confirm-screen.visible  { opacity: 1; }
 
-/* Stars de fondo igual que el hero */
 .confirm-bg {
   position: absolute; inset: 0; pointer-events: none;
   background-image:
@@ -362,9 +318,6 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
   color: var(--g3); opacity: 0.7;
 }
 
-/* ══════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════ */
 @media (max-width: 540px) {
   .card        { padding: 2rem 1.25rem; }
   .slide-card  { padding: 1.75rem 1.1rem; }
@@ -374,4 +327,3 @@ body { font-family: 'Lato', sans-serif; font-weight: 300; background-color: var(
   .dot-indicators { order: -1; max-width: 100%; }
   .confirm-title  { font-size: 2rem; }
 }
-
