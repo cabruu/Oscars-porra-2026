@@ -1,5 +1,3 @@
-// data.js — Nominados a los Oscars 2026
-
 const OSCAR_CATEGORIES = [
   {
     id: "mejor_pelicula",
