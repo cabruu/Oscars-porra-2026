@@ -3,7 +3,7 @@
 // ── CONFIGURACIÓN ──────────────────────────────────────────
 const CONFIG = {
   // Pegá acá la URL de tu Google Apps Script Web App
-  APPS_SCRIPT_URL: "https://script.google.com/macros/s/TU_DEPLOYMENT_ID_AQUI/exec",
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbz_U9qD6kEgS4JfGe26bFZk6K52ZHf4nxZRvKdZGJJb-Db5ZXH0LGXEPjXVMo4CboM4/exec",
 };
 
 // ── ESTADO ─────────────────────────────────────────────────
