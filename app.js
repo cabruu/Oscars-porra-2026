@@ -1,5 +1,3 @@
-// app.js — Quiniela Oscars 2026
-
 const CONFIG = {
   APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbz_U9qD6kEgS4JfGe26bFZk6K52ZHf4nxZRvKdZGJJb-Db5ZXH0LGXEPjXVMo4CboM4/exec",
 };
@@ -16,9 +14,7 @@ function esc(str) {
   return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
 
-// ── PASO 1: USUARIO ─────────────────────────────────
 function initUserStep() {
-  // Botón flecha del hero → scroll al quiz
   document.getElementById("btn-scroll-down").addEventListener("click", () => {
     document.getElementById("quiz-section").scrollIntoView({ behavior: "smooth" });
   });
@@ -38,23 +34,19 @@ function initUserStep() {
     state.twitch  = t;
     state.discord = d;
 
-    // Ocultar hero
     document.getElementById("hero").classList.add("hero-hidden");
 
-    // Mostrar categorías
     document.getElementById("step-user").classList.remove("active");
     document.getElementById("step-user").classList.add("hidden");
     document.getElementById("step-categories").classList.remove("hidden");
     document.getElementById("step-categories").classList.add("active");
 
-    // Scroll arriba del quiz limpiamente
     window.scrollTo({ top: 0, behavior: "smooth" });
 
     initSlider();
   });
 }
 
-// ── SLIDER ──────────────────────────────────────────
 function initSlider() {
   document.getElementById("cat-total").textContent = OSCAR_CATEGORIES.length;
   buildSlides();
@@ -175,7 +167,6 @@ function updateSubmitZone() {
   }
 }
 
-// ── SUBMIT ──────────────────────────────────────────
 async function handleSubmit() {
   if (state.submitted) return;
 
@@ -207,9 +198,7 @@ async function handleSubmit() {
   }
 }
 
-// ── PANTALLA DE CONFIRMACIÓN ─────────────────────────
 function showConfirmScreen() {
-  // Usuarios
   if (state.twitch)
     document.getElementById("confirm-twitch-display").innerHTML =
       `<span class="modal-tag twitch">🟣 ${esc(state.twitch)}</span>`;
@@ -217,19 +206,15 @@ function showConfirmScreen() {
     document.getElementById("confirm-discord-display").innerHTML =
       `<span class="modal-tag discord">🔵 ${esc(state.discord)}</span>`;
 
-  // Mostrar pantalla full screen
   const screen = document.getElementById("confirm-screen");
   screen.classList.remove("hidden");
-  // Forzar reflow para que la transición funcione
+
   screen.getBoundingClientRect();
   screen.classList.add("visible");
 
-  // Bloquear scroll del body
   document.body.style.overflow = "hidden";
 }
 
-// ── INIT ────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
   initUserStep();
 });
-
