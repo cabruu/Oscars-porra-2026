@@ -1,60 +1,62 @@
 // app.js — Quiniela Oscars 2026
 
-// ── CONFIGURACIÓN ──────────────────────────────────────────
 const CONFIG = {
-  // Pegá acá la URL de tu Google Apps Script Web App
   APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbz_U9qD6kEgS4JfGe26bFZk6K52ZHf4nxZRvKdZGJJb-Db5ZXH0LGXEPjXVMo4CboM4/exec",
 };
 
-// ── ESTADO ─────────────────────────────────────────────────
 const state = {
-  answers:    {},    // { category_id: "nominee" }
-  currentIdx: 0,     // slide actual
+  answers:    {},
+  currentIdx: 0,
   submitted:  false,
   twitch:     "",
   discord:    "",
 };
 
-// ── UTILS ──────────────────────────────────────────────────
 function esc(str) {
-  return String(str)
-    .replace(/&/g,"&amp;").replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
 
-// ── PASO 1: USUARIO ────────────────────────────────────────
+// ── PASO 1: USUARIO ─────────────────────────────────
 function initUserStep() {
-  const btn = document.getElementById("btn-start");
-  const tInput = document.getElementById("twitch");
-  const dInput = document.getElementById("discord");
+  // Botón flecha del hero → scroll al quiz
+  document.getElementById("btn-scroll-down").addEventListener("click", () => {
+    document.getElementById("quiz-section").scrollIntoView({ behavior: "smooth" });
+  });
 
-  btn.addEventListener("click", () => {
-    const t = tInput.value.trim();
-    const d = dInput.value.trim();
+  document.getElementById("btn-start").addEventListener("click", () => {
+    const t = document.getElementById("twitch").value.trim();
+    const d = document.getElementById("discord").value.trim();
+
     if (!t && !d) {
-      tInput.focus();
-      tInput.style.borderColor = "rgba(255,80,80,0.7)";
-      setTimeout(() => tInput.style.borderColor = "", 1500);
+      const input = document.getElementById("twitch");
+      input.focus();
+      input.style.borderColor = "rgba(255,80,80,0.7)";
+      setTimeout(() => input.style.borderColor = "", 1500);
       return;
     }
+
     state.twitch  = t;
     state.discord = d;
 
+    // Ocultar hero
+    document.getElementById("hero").classList.add("hero-hidden");
+
+    // Mostrar categorías
     document.getElementById("step-user").classList.remove("active");
     document.getElementById("step-user").classList.add("hidden");
     document.getElementById("step-categories").classList.remove("hidden");
     document.getElementById("step-categories").classList.add("active");
 
+    // Scroll arriba del quiz limpiamente
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
     initSlider();
-    window.scrollTo({ top: document.getElementById("quiz-section").offsetTop - 20, behavior: "smooth" });
   });
 }
 
-// ── SLIDER ─────────────────────────────────────────────────
+// ── SLIDER ──────────────────────────────────────────
 function initSlider() {
-  const total = OSCAR_CATEGORIES.length;
-  document.getElementById("cat-total").textContent = total;
-
+  document.getElementById("cat-total").textContent = OSCAR_CATEGORIES.length;
   buildSlides();
   buildDots();
   updateSlider();
@@ -63,7 +65,7 @@ function initSlider() {
     if (state.currentIdx > 0) { state.currentIdx--; updateSlider(); }
   });
   document.getElementById("btn-next").addEventListener("click", () => {
-    if (state.currentIdx < total - 1) { state.currentIdx++; updateSlider(); }
+    if (state.currentIdx < OSCAR_CATEGORIES.length - 1) { state.currentIdx++; updateSlider(); }
   });
   document.getElementById("submit-btn").addEventListener("click", handleSubmit);
 }
@@ -80,17 +82,16 @@ function buildSlides() {
     slide.innerHTML = `
       <div class="slide-header">
         <span class="slide-emoji">${cat.emoji}</span>
-        <div class="slide-header-text">
+        <div class="slide-meta">
           <div class="slide-num">Categoría ${idx + 1} de ${OSCAR_CATEGORIES.length}</div>
           <h2 class="slide-name">${cat.name}</h2>
         </div>
-        <span class="slide-status" id="status-${cat.id}">Sin elegir</span>
+        <span class="slide-badge" id="badge-${cat.id}">Sin elegir</span>
       </div>
       <div class="nominees-list">
         ${cat.nominees.map((nom, i) => `
           <label class="nominee-label" for="n-${cat.id}-${i}">
-            <input type="radio" name="${cat.id}" id="n-${cat.id}-${i}"
-              value="${esc(nom)}" ${state.answers[cat.id] === nom ? "checked" : ""}/>
+            <input type="radio" name="${cat.id}" id="n-${cat.id}-${i}" value="${esc(nom)}" />
             <span class="nominee-box">
               <span class="radio-dot"></span>
               <span class="nominee-text">${nom}</span>
@@ -100,13 +101,13 @@ function buildSlides() {
       </div>
     `;
 
-    // Eventos
     slide.querySelectorAll('input[type="radio"]').forEach(radio => {
       radio.addEventListener("change", () => {
         state.answers[cat.id] = radio.value;
         slide.classList.add("answered");
-        document.getElementById(`status-${cat.id}`).textContent = "✓ Elegido";
-        document.getElementById(`status-${cat.id}`).classList.add("ok");
+        const badge = document.getElementById(`badge-${cat.id}`);
+        badge.textContent = "✓ Elegido";
+        badge.classList.add("ok");
         updateDots();
         updateProgress();
         updateSubmitZone();
@@ -132,21 +133,17 @@ function buildDots() {
 function updateSlider() {
   const idx   = state.currentIdx;
   const total = OSCAR_CATEGORIES.length;
-  const track = document.getElementById("slider-track");
-
-  track.style.transform = `translateX(-${idx * 100}%)`;
+  document.getElementById("slider-track").style.transform = `translateX(-${idx * 100}%)`;
   document.getElementById("cat-current").textContent = idx + 1;
   document.getElementById("btn-prev").disabled = idx === 0;
   document.getElementById("btn-next").disabled = idx === total - 1;
-
   updateDots();
   updateProgress();
   updateSubmitZone();
 }
 
 function updateDots() {
-  const dots = document.querySelectorAll(".dot");
-  dots.forEach((dot, i) => {
+  document.querySelectorAll(".dot").forEach((dot, i) => {
     dot.classList.toggle("active", i === state.currentIdx);
     dot.classList.toggle("done",   i !== state.currentIdx && !!state.answers[OSCAR_CATEGORIES[i].id]);
   });
@@ -167,27 +164,24 @@ function updateSubmitZone() {
   const note     = document.getElementById("submit-note");
 
   if (answered === 0) {
-    note.innerHTML = "Respondé las categorías para poder enviar tu quiniela.";
+    note.innerHTML = "Respondé las categorías para poder enviar tu porra.";
     btn.disabled = true;
   } else if (missing > 0) {
     note.innerHTML = `Respondiste <strong>${answered}</strong> de <strong>${total}</strong> categorías. Podés enviar así o completar las ${missing} restantes.`;
     btn.disabled = false;
   } else {
-    note.innerHTML = `¡Completaste las <strong>${total}</strong> categorías! Listo para enviar.`;
+    note.innerHTML = `¡Completaste las <strong>${total}</strong> categorías! Listo para enviar 🏆`;
     btn.disabled = false;
   }
 }
 
-// ── SUBMIT ─────────────────────────────────────────────────
+// ── SUBMIT ──────────────────────────────────────────
 async function handleSubmit() {
   if (state.submitted) return;
 
-  const answered = Object.keys(state.answers).length;
-  if (answered === 0) { alert("Seleccioná al menos una categoría."); return; }
-
   const btn = document.getElementById("submit-btn");
   btn.disabled = true;
-  btn.textContent = "Enviando…";
+  btn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V15a1 1 0 0 0-2 0v1.93A8 8 0 0 1 4.07 11H6a1 1 0 0 0 0-2H4.07A8 8 0 0 1 11 4.07V6a1 1 0 0 0 2 0V4.07A8 8 0 0 1 19.93 11H18a1 1 0 0 0 0 2h1.93A8 8 0 0 1 13 16.93z"/></svg> Enviando…`;
 
   const payload = {
     timestamp: new Date().toISOString(),
@@ -204,55 +198,38 @@ async function handleSubmit() {
       body:    JSON.stringify(payload),
     });
     state.submitted = true;
-    showModal();
+    showConfirmScreen();
   } catch (err) {
     console.error(err);
     btn.disabled = false;
-    btn.textContent = "🏆 Enviar mi Quiniela";
-    alert("Error al enviar. Revisá tu conexión.");
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Enviar mi Porra`;
+    alert("Error al enviar. Revisá tu conexión e intentá de nuevo.");
   }
 }
 
-// ── MODAL ──────────────────────────────────────────────────
-function showModal() {
+// ── PANTALLA DE CONFIRMACIÓN ─────────────────────────
+function showConfirmScreen() {
+  // Usuarios
   if (state.twitch)
-    document.getElementById("modal-twitch-display").innerHTML =
+    document.getElementById("confirm-twitch-display").innerHTML =
       `<span class="modal-tag twitch">🟣 ${esc(state.twitch)}</span>`;
   if (state.discord)
-    document.getElementById("modal-discord-display").innerHTML =
+    document.getElementById("confirm-discord-display").innerHTML =
       `<span class="modal-tag discord">🔵 ${esc(state.discord)}</span>`;
 
-  const topCats = [
-    "mejor_pelicula","mejor_direccion","mejor_actor",
-    "mejor_actriz","mejor_actor_reparto","mejor_actriz_reparto"
-  ];
-  const rows = topCats
-    .filter(id => state.answers[id])
-    .map(id => {
-      const cat = OSCAR_CATEGORIES.find(c => c.id === id);
-      return `<div class="summary-row">
-        <span class="summary-cat">${cat.emoji} ${cat.name}</span>
-        <span class="summary-pick">${esc(state.answers[id])}</span>
-      </div>`;
-    }).join("");
+  // Mostrar pantalla full screen
+  const screen = document.getElementById("confirm-screen");
+  screen.classList.remove("hidden");
+  // Forzar reflow para que la transición funcione
+  screen.getBoundingClientRect();
+  screen.classList.add("visible");
 
-  document.getElementById("modal-summary").innerHTML =
-    rows || `<p style="color:var(--white-dim);font-size:0.9rem">Todas tus predicciones fueron guardadas ✓</p>`;
-
-  const modal = document.getElementById("confirm-modal");
-  modal.classList.remove("hidden");
-  requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add("visible")));
+  // Bloquear scroll del body
+  document.body.style.overflow = "hidden";
 }
 
-function closeModal() {
-  const modal = document.getElementById("confirm-modal");
-  modal.classList.remove("visible");
-  setTimeout(() => modal.classList.add("hidden"), 420);
-}
-
-// ── INIT ───────────────────────────────────────────────────
+// ── INIT ────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
   initUserStep();
-  document.getElementById("modal-close-btn").addEventListener("click", closeModal);
-  document.querySelector(".modal-backdrop").addEventListener("click", closeModal);
 });
+
