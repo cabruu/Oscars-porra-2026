@@ -62,8 +62,8 @@ const OSCAR_CATEGORIES = [
     name: "Mejor Sonido",
     emoji: "🔊",
     nominees: [
-      "F1","Marty Supreme","Una batalla tras otra",
-      "Valor sentimental","Los pecadores"
+      "F1","Frankenstein","Una batalla tras otra",
+      "Los pecadores","SIRAT"
     ]
   },
   {
